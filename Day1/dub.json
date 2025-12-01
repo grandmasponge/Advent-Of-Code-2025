@@ -1,0 +1,9 @@
+{
+	"authors": [
+		"Toby Reay"
+	],
+	"copyright": "Copyright © 2025, Toby Reay",
+	"description": "A minimal D application.",
+	"license": "AGPL-3.0-only",
+	"name": "day1"
+}

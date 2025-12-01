@@ -45,4 +45,5 @@ Merry Christmas GrandmaSponge <3
 19. Fortran 🚀🌕
 
 ## Langauges Done
-Day 1: Dlang: https://dlang.org
+Day 1: Dlang: https://dlang.org  <img width="567" height="60" alt="image" src="https://github.com/user-attachments/assets/2eeccfa3-6d92-46a7-b0d3-f8baab648bb6" />
+

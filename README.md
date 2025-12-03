@@ -47,3 +47,6 @@ Merry Christmas GrandmaSponge <3
 ## Langauges Done
 Day 1: Dlang: https://dlang.org  <img width="567" height="60" alt="image" src="https://github.com/user-attachments/assets/2eeccfa3-6d92-46a7-b0d3-f8baab648bb6" />
 
+Day 2: C: do i rlly need to provide a link?
+
+

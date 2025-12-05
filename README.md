@@ -49,4 +49,6 @@ Day 1: Dlang: https://dlang.org  <img width="567" height="60" alt="image" src="h
 
 Day 2: C: do i rlly need to provide a link?
 
+Day 3: Java do i need to provide a link to Jaba
 
+Day 4: Go (its a really small unkown langauge developed by a small company. Only known by primagen) link: https://go.dev/

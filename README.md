@@ -47,7 +47,8 @@ Merry Christmas GrandmaSponge <3
 ## Langauges Done
 Day 1: Dlang: https://dlang.org  <img width="567" height="60" alt="image" src="https://github.com/user-attachments/assets/2eeccfa3-6d92-46a7-b0d3-f8baab648bb6" />
 
-Day 2: C: do i rlly need to provide a link?
+Day 2: C: do i rlly need to provide a link? <img width="602" height="54" alt="image" src="https://github.com/user-attachments/assets/d12b1e23-b82b-4f26-bc71-f395c759ebff" />
+
 
 Day 3: Java do i need to provide a link to Jaba
 

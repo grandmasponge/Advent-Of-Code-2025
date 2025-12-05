@@ -1,10 +1,10 @@
 use std::{fs::File, io::Read};
 
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Ranges {
-    low: i64,
-    high: i64,
+    pub low: i64,
+    pub high: i64,
 }
 
 impl Ranges {
@@ -26,6 +26,7 @@ pub enum Mode {
 }
 
 const FILE_PATH: &str = "input.txt";
+
 
 fn main() {
     
@@ -57,8 +58,8 @@ fn main() {
 
     for line in lines {
         if line.is_empty() {
-            mode = Mode::Ids;
-            continue;
+            break;
+            
         }
 
         match mode {
@@ -66,29 +67,49 @@ fn main() {
                 ranges.push(parse_ranges(line));
             },
             Mode::Ids => {
-                let num = line
-                .parse::<i64>()
-                .unwrap();
-
-                ids.push(num);
+               
             },
         }
     }
-    let mut total = 0;
+ 
 
-    ids.iter().for_each(|f|  {
-        for range in &ranges {
-            if range.within_range(*f) {
-                total+= 1;
-                break;
-            }
+   let mut total = 0;
+   let merged = merge_ranges(ranges);
+
+   for range in merged {
+        total += (range.high +1) - range.low ;
+   }
+
+
+   println!("Total :{}", total)
+}
+
+
+
+
+fn merge_ranges(mut ranges: Vec<Ranges>) -> Vec<Ranges> {
+    if ranges.is_empty() { 
+        return vec![]; 
+    }
+
+
+    ranges.sort_by_key(|r| r.low);
+
+    let mut merged = vec![ranges[0].clone()];
+
+    for r in ranges.into_iter().skip(1) {
+        let last = merged.last_mut().unwrap();
+
+        if r.low <= last.high {
+           
+            last.high = last.high.max(r.high);
+        } else {
+            
+            merged.push(r);
         }
+    }
 
-    });
-
-    println!("Total of fresh ingredients: {}", total);
-
-
+    merged
 }
 
 fn parse_ranges(line: &str) -> Ranges {
@@ -114,3 +135,12 @@ fn parse_ranges(line: &str) -> Ranges {
 
     Ranges::new(low, high)
 }
+
+
+/*
+
+    10 - 20
+
+    6 -  15
+
+*/

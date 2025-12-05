@@ -53,3 +53,5 @@ Day 2: C: do i rlly need to provide a link? <img width="602" height="54" alt="im
 Day 3: Java do i need to provide a link to Jaba
 
 Day 4: Go (its a really small unkown langauge developed by a small company. Only known by primagen) link: https://go.dev/
+
+Day 5: Rust (my beloved): https://rust-lang.org/

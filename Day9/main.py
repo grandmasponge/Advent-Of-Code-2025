@@ -62,4 +62,4 @@ def solve_problem(file_name, redgreen=False, threshold=0):
 if __name__ == "__main__":
 
  
- print(solve_problem("input", True, 15000*80000))# threshold by eyeballing the shape
+ print(solve_problem("input", True, 15000*80000))

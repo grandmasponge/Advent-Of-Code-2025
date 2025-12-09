@@ -1,84 +1,65 @@
-import math
-filename = "input.txt"
-inputs = [(int(x), int(y)) for line in open("input.txt") for x, y in [line.strip().split(",")]]
+from pathlib import Path
 
-def ray_cast(point, polygon): #stack overflow :3
-    x, y = point
-    
-    for k in range(len(polygon)):
-        next_k = (k + 1) % len(polygon)
-        x1, y1 = polygon[k]
-        x2, y2 = polygon[next_k]
-        
-       
-        if x1 == x2:  
-            if x == x1 and min(y1, y2) <= y <= max(y1, y2):
-                return True
-        elif y1 == y2:  
-            if y == y1 and min(x1, x2) <= x <= max(x1, x2):
-                return True
-        else:  
-       
-            cross = (y - y1) * (x2 - x1) - (x - x1) * (y2 - y1)
-            if abs(cross) < 1e-9:  
-                if min(x1, x2) <= x <= max(x1, x2) and min(y1, y2) <= y <= max(y1, y2):
-                    return True
-    
+import numpy as np
+import shapely
 
-    intersections = 0
-    for k in range(len(polygon)):
-        next_k = (k + 1) % len(polygon)
-        x1, y1 = polygon[k]
-        x2, y2 = polygon[next_k]
-        if (y < y1) != (y < y2) and x < (x2-x1) * (y-y1)/(y2-y1) + x1:
-            intersections += 1
-    return intersections % 2 == 1
+cwd = Path(__file__).parent
+
+def parse_input(file_path):
+  with open(file_path,"r") as fp:
+    data = list(map(lambda x: list(map(int,x.split(','))), fp.readlines()))
+
+  return np.array(data)
 
 
-largest_area = 0
-n = len(inputs)
+def construct_shapes(coordinates, threshold):
 
-for i in range(n):
-    x1, y1 = inputs[i]
-    for j in range(i + 1, n):
-        x2, y2 = inputs[j]
-        
-        
-        if x1 == x2 or y1 == y2:
-            continue
-        
-    
-        min_x = min(x1, x2)
-        max_x = max(x1, x2)
-        min_y = min(y1, y2)
-        max_y = max(y1, y2)
-        
-        
-        corners = [
-            (min_x, min_y),
-            (min_x, max_y),
-            (max_x, min_y),
-            (max_x, max_y)
-        ]
-        
-    
-        all_inside = True
-        for corner in corners:
-            if not ray_cast(corner, inputs):
-                all_inside = False
-                break
-        
-      
-        if not all_inside:
-            continue
-        
-    
-        dx = max_x - min_x + 1
-        dy = max_y - min_y + 1
-        area = dx * dy
-        
-        if area > largest_area:
-            largest_area = area
-            print(largest_area)
+  Itriu = np.triu_indices(coordinates.shape[0], k=2)
+  squares = []
 
-print(largest_area)
+  for i0,i1 in zip(*Itriu):
+
+    c0 = tuple(coordinates[i0,:])
+    c1 = tuple(coordinates[i1,:])
+    area = np.prod(abs(np.array(c0) - np.array(c1)) + np.array([1,1]))
+
+    if area>threshold:
+      c2 = (c0[0],c1[1])
+      c3 = (c1[0],c0[1])
+      squares.append(shapely.Polygon((c0,c3,c1,c2)))
+
+  polygon = shapely.Polygon(coordinates)
+
+  return polygon, squares
+
+
+def solve_problem(file_name, redgreen=False, threshold=0):
+
+  coordinates = parse_input("input.txt")
+
+  if not redgreen:
+    areas = np.prod(abs(coordinates[None,:] - coordinates[:,None]) +\
+                    np.array([1,1])[None,None,:], axis=-1)
+    max_area = np.max(areas)
+
+  else:
+    polygon, squares = construct_shapes(coordinates, threshold)
+    max_area = -np.inf
+
+    for inds,square in enumerate(squares):
+      if square.area==0:
+        continue
+
+      if polygon.contains(square):
+        c = np.array(list(zip(*square.exterior.coords.xy)))
+        if (a:=np.prod(abs(c[0] - c[2]) + np.array([1,1])))>max_area:
+          max_area = a
+
+  return int(max_area)
+
+
+
+if __name__ == "__main__":
+
+ 
+ print(solve_problem("input", True, 15000*80000))# threshold by eyeballing the shape

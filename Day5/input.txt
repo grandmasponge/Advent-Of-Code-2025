@@ -1189,3 +1189,14 @@
 75146529077781
 396110422076306
 7831563222277
+
+
+sort from lowest to highest by the range.low val
+    
+6 7 8                         add if range.high  <  next.low
+       10 11 12 13 14
+          11 12 13            delete  if range.low <= next.low and range.high >= next.high
+              12 13 14 15 16  merge if range.low <= next.low and range.high < next.high
+
+
+              might be good if you go down highest to lowest
